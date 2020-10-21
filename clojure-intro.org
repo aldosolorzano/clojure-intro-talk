@@ -1,0 +1,269 @@
+#+TITLE: Introducción a Clojure
+
+* Slide
+** Clojure
+
+[[file:images/clojure.png]]
+
+- Lenguaje de programación dinámico para la JVM.
+
+- ~Aldo Solorzano~
+
+* Slide
+**  Agenda
+
+1 Fundamentos
+
+2 Programación funcional en Clojure
+
+3 Inmutabilidad
+
+4 Sintaxis simple y elegante
+
+5 Tipos de datos
+
+6 Estructuras de datos (list, vector, map, set)
+
+7 Variables
+
+8 Funciones
+
+9 Mutabilidad
+
+10 Demo
+
+* Slide
+**  Fundamentos
+
+- Creado por Rich Hickey en 2007
+
+- Open source
+
+- Dinámico
+
+- Dialecto de Lisp
+
+- Lenguaje funcional
+
+- Corre en la JVM
+
+- Concurrencia ("out of the box")
+
+* Slide
+** Programación funcional en Clojure
+
+- Inmutabilidad
+
+- Funciones puras (una entrada, siempre produce el mismo resultado)
+
+- Funciones son primera clase, se pueden guardar, pasar como argumento y retornar
+
+- Elegante y reutilizable
+
+* Slide
+** Inmutabilidad
+
+#+BEGIN_SRC java
+  String[] cars = {"Duster", "Rav-4", "Cherokee"};
+
+  Car.sell(cars 1)
+  Car.repairAll(cars)
+  Car.addOne(cars "Sportage")
+  Array.sort(cars)
+
+  // cars ?
+
+#+END_SRC
+
+#+BEGIN_SRC clojure
+  (def cars ["Duster" "Rav" "Cherokee"])
+
+  (sell cars 1)
+  (repair-all cars)
+  (add-one cars "Sportage")
+  (sort cars)
+
+  ;; cars?
+
+#+END_SRC
+
+* Slide
+** Sintaxis simple y elegante
+
+#+BEGIN_SRC java
+public class SquaresOfIntegers {
+  public static void main(String[] args) {
+    for (int i=0; i<25; i++)
+      System.out.println(i*i);
+  }
+}
+
+#+END_SRC
+
+#+BEGIN_SRC clojure
+(defn square [x] (* x x))
+
+(println (take 25 (map square (range))))
+
+#+END_SRC
+
+Referencia: [[http://blog.cleancoder.com/uncle-bob/2019/08/22/WhyClojure.html][Why clojure? - Uncle Bob]]
+
+* Slide
+** Tipo de datos
+#+BEGIN_SRC clojure
+  19         ;; Integers
+  19.45      ;; Doubles
+  20M        ;; BigDecimal
+  22/7       ;; Ratios
+
+  "aldo"     ;; Strings
+
+  \a         ;; Characters
+
+  status     ;; Symbol
+
+  :status    ;; Keywords
+
+  true false ;; Booleans
+
+  nil        ;; Null
+
+  #"a*b"     ;; Regex patterns
+#+END_SRC
+
+* Slide
+** Estructuras de datos - Lista/List
+
+- Lista enlazada simple, crecen al principio
+- Rápida adición
+- Tiempo lineal para extraer ultimo dato en la lista. (N)
+- Tiempo constante para extrar el primer dato. (K)
+
+#+BEGIN_SRC clojure
+(list 1 2 3 4) ;; => (+ 1 3 4 5)
+
+'("aldo" "alex" "eddu" 25) ;; => ("aldo" "alex" "eddu" 25)
+
+(list? '(1 2 3)) ;; => true
+#+END_SRC
+
+* Slide
+** Estructuras de datos - Vector
+
+- Acceso eficiente con index
+- Crecen al final en tiempo constante (ArrayList), rápido acceso en cualquier posición
+
+#+BEGIN_SRC clojure
+(vector 1 2 3 4) ;; => [1 3 4 5]
+
+[+ - string? list] ;; => [+ - string? list]
+
+(vector? ["aldo" "alex" "eddu" 25]) ;; => true
+#+END_SRC
+
+* Slide
+** Estructuras de datos - Mapas/Maps
+
+- Llave/valor (HashMaps, HashTables)
+- Rápido acceso al valor contenido por la llave
+
+#+BEGIN_SRC clojure
+{:a "aldo"
+ :b "eddu"
+ :c "alex"}
+
+{1 "aldo", 2 "eddu", 3 "alex"}
+
+(hash-map :id "uuivl23ksh" :status "sent")
+;; => {:id "uuivl23ksh" :status "sent"}
+
+(map? {:a "value"}) ;; => true
+#+END_SRC
+
+* Slide
+** Estructuras de datos - Sets
+
+- Los sets en Clojure funcionan como conjuntos matemáticos
+- Colección de valores únicos
+
+#+BEGIN_SRC clojure
+#{:b "eddu" :c "alex"} ;; => #{:b "eddu" :c "alex"}
+
+(set '(1 2 3 +)) ;; =>  #{1 2 3 +}
+
+(set? #{:a "value"}) ;; => true
+#+END_SRC
+
+* Slide
+** Estructuras de datos - Anidación
+
+- Todo se puede anidar
+- Tuples como llave
+- Maps como llave
+
+#+BEGIN_SRC clojure
+
+{[:a :b] "tuple como llave"
+ [:c :f] {:name "aldo"}}
+
+[{:a 1 :b 2} "hola"
+ 12          (list 12 34 "aldo")]
+
+#+END_SRC
+
+* Slide
+** Variables
+
+#+BEGIN_SRC clojure
+
+;op  name          value
+(def best-language "clojure")
+
+(def names ["aldo" "eddu" "alex"])
+
+#+END_SRC
+
+* Slide
+** Funciones
+
+#+BEGIN_SRC clojure
+
+;op params body
+(fn [x y] (str x y))
+
+(def to-string (fn [x y] (str x y)) ))
+
+;op   name     params  body
+(defn to-string [x y] (str x y) ))
+#+END_SRC
+
+* Slide
+** Mutabilidad en clojure
+
+- La norma en Clojure, ~todo es inmutable~
+
+- Clojure provee estructuras de datos mutables, para situaciones específicas
+
+- Atoms, refs, agents, var
+
+- Para actualizar, se pasa una *función* que se aplica al valor contenido en el momento
+
+#+BEGIN_SRC clojure
+(def counter (atom 0))
+
+(swap! counter inc) ;; => 1
+
+(swap! counter inc) ;; => 2
+#+END_SRC
+
+* Slide
+** Gracias!
+
+[[file:images/clojure.png]]
+
+¿Preguntas?
+
+ Presentación - [[https://github.com/ericdallo/emacs-talk][Introducción a Clojure]]
+
+ Github - [[https://github.com/aldosolorzano][aldosolorzano]]
