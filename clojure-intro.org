@@ -264,6 +264,6 @@ Referencia: [[http://blog.cleancoder.com/uncle-bob/2019/08/22/WhyClojure.html][W
 
 ¿Preguntas?
 
- Presentación - [[https://github.com/ericdallo/emacs-talk][Introducción a Clojure]]
+ Presentación - [[https://github.com/aldosolorzano/clojure-intro-talk][Introducción a Clojure]]
 
  Github - [[https://github.com/aldosolorzano][aldosolorzano]]
