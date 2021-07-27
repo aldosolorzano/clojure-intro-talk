@@ -45,7 +45,7 @@
 
 - Lenguaje funcional
 
-- Corre en la JVM
+- Corre en la JVM (interop)
 
 - Concurrencia ("out of the box")
 
@@ -212,8 +212,9 @@ Referencia: [[http://blog.cleancoder.com/uncle-bob/2019/08/22/WhyClojure.html][W
 
 #+BEGIN_SRC clojure
 
-{[:a :b] "tuple como llave"
- [:c :f] {:name "aldo"}}
+{[:a :b]   "tuple como llave"
+ :some-key {:person {:name "aldo"
+                     :last-name "solorzano"}}
 
 [{:a 1 :b 2} "hola"
  12          (list 12 34 "aldo")]
@@ -240,10 +241,10 @@ Referencia: [[http://blog.cleancoder.com/uncle-bob/2019/08/22/WhyClojure.html][W
 ;op params body
 (fn [x y] (str x y))
 
-(def to-string (fn [x y] (str x y)) ))
+(def to-string (fn [x y] (str x y)))
 
 ;op   name     params  body
-(defn to-string [x y] (str x y) ))
+(defn to-string [x y] (str x y))
 
 #+END_SRC
 
